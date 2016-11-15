@@ -1,0 +1,20 @@
+---
+
+- name: ensure /etc/aliases exists
+  copy:
+    content: ""
+    dest: /etc/aliases
+    force: no
+    group: root
+    owner: root
+    mode: 0644
+  notify: newaliases
+
+- name: postfix /etc/aliases
+  lineinfile:                                                                    
+    dest: /etc/aliases
+    regexp: "^{{ item.from }}:"                                                  
+    line: "{{ item.from }}: {{ item.to }}"                                   
+  with_items:                                                                    
+    "{{ exim4.aliases }}"  
+  notify: newaliases

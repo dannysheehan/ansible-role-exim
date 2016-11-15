@@ -1,0 +1,8 @@
+---
+
+- name: Check if Debian
+  include: "install.deb.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: configuration
+  include: "config.yml"

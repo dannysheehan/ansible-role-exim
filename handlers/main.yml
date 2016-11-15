@@ -1,0 +1,16 @@
+---
+
+- name: restart exim4
+  service: name=exim4 state=restarted
+  notify: exim4 send test mail
+
+- name: reload exim4
+  service: name=exim4 state=reloaded
+  notify: exim4 send test mail
+
+- name: newaliases
+  action: command newaliases 
+  notify: reload exim4
+
+- name: exim4 send test mail
+  shell: echo "Test mail from new/updated exim4 at `hostname`" | mail postmaster -s "Test SMTP `hostname`"

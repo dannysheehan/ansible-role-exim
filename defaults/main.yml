@@ -1,0 +1,9 @@
+---
+
+exim4:
+    config: 
+      - { question: mailname, value: "{{ ansible_fqdn }}", vtype: "string" }
+
+    aliases: 
+      - { from: postmaster, to: root }
+      - { from: abuse,      to: root }
